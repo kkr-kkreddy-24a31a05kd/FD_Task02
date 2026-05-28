@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Modern Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .btn-press {
+            transition: transform 0.1s, background-color 0.2s;
+        }
+        .btn-press:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 min-h-screen flex items-center justify-center p-4">
+
+    <div class="glass-panel w-full max-w-sm rounded-3xl p-6 shadow-2xl">
+        
+        <!-- Display -->
+        <input type="text" id="display" 
+            class="w-full bg-transparent text-right text-4xl text-white font-light p-4 mb-6 outline-none border-b border-white/10" 
+            placeholder="0" readonly>
+
+        <!-- Buttons Grid -->
+        <div class="grid grid-cols-4 gap-4">
+            <!-- Row 1 -->
+            <button onclick="clearDisplay()" class="col-span-2 bg-red-500/20 text-red-400 p-4 rounded-2xl font-bold btn-press hover:bg-red-500/30">AC</button>
+            <button onclick="deleteLast()" class="bg-slate-700 text-slate-300 p-4 rounded-2xl font-bold btn-press hover:bg-slate-600">DEL</button>
+            <button onclick="appendToDisplay('/')" class="bg-indigo-500 text-white p-4 rounded-2xl font-bold btn-press hover:bg-indigo-400">/</button>
+
+            <!-- Row 2 -->
+            <button onclick="appendToDisplay('7')" class="bg-slate-800 text-white p-4 rounded-2xl font-semibold btn-press hover:bg-slate-700">7</button>
+            <button onclick="appendToDisplay('8')" class="bg-slate-800 text-white p-4 rounded-2xl font-semibold btn-press hover:bg-slate-700">8</button>
+            <button onclick="appendToDisplay('9')" class="bg-slate-800 text-white p-4 rounded-2xl font-semibold btn-press hover:bg-slate-700">9</button>
+            <button onclick="appendToDisplay('*')" class="bg-indigo-500 text-white p-4 rounded-2xl font-bold btn-press hover:bg-indigo-400">×</button>
+
+            <!-- Row 3 -->
+            <button onclick="appendToDisplay('4')" class="bg-slate-800 text-white p-4 rounded-2xl font-semibold btn-press hover:bg-slate-700">4</button>
+            <button onclick="appendToDisplay('5')" class="bg-slate-800 text-white p-4 rounded-2xl font-semibold btn-press hover:bg-slate-700">5</button>
+            <button onclick="appendToDisplay('6')" class="bg-slate-800 text-white p-4 rounded-2xl font-semibold btn-press hover:bg-slate-700">6</button>
+            <button onclick="appendToDisplay('-')" class="bg-indigo-500 text-white p-4 rounded-2xl font-bold btn-press hover:bg-indigo-400">-</button>
+
+            <!-- Row 4 -->
+            <button onclick="appendToDisplay('1')" class="bg-slate-800 text-white p-4 rounded-2xl font-semibold btn-press hover:bg-slate-700">1</button>
+            <button onclick="appendToDisplay('2')" class="bg-slate-800 text-white p-4 rounded-2xl font-semibold btn-press hover:bg-slate-700">2</button>
+            <button onclick="appendToDisplay('3')" class="bg-slate-800 text-white p-4 rounded-2xl font-semibold btn-press hover:bg-slate-700">3</button>
+            <button onclick="appendToDisplay('+')" class="bg-indigo-500 text-white p-4 rounded-2xl font-bold btn-press hover:bg-indigo-400">+</button>
+
+            <!-- Row 5 -->
+            <button onclick="appendToDisplay('0')" class="col-span-2 bg-slate-800 text-white p-4 rounded-2xl font-semibold btn-press hover:bg-slate-700">0</button>
+            <button onclick="appendToDisplay('.')" class="bg-slate-800 text-white p-4 rounded-2xl font-semibold btn-press hover:bg-slate-700">.</button>
+            <button onclick="calculate()" class="bg-emerald-500 text-white p-4 rounded-2xl font-bold btn-press hover:bg-emerald-400">=</button>
+        </div>
+    </div>
+
+    <script>
+        const display = document.getElementById('display');
+
+        function appendToDisplay(input) {
+            display.value += input;
+        }
+
+        function clearDisplay() {
+            display.value = "";
+        }
+
+        function deleteLast() {
+            display.value = display.value.slice(0, -1);
+        }
+
+        function calculate() {
+            try {
+                // Using a safer evaluation method would be better in a production app,
+                // but for this simple calculator, eval works well.
+                display.value = eval(display.value);
+            } catch (error) {
+                display.value = "Error";
+                setTimeout(clearDisplay, 1500);
+            }
+        }
+    </script>
+</body>
+</html>
